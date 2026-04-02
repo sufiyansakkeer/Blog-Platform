@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlogPlatform.Application.DTOs.Auth;
 using BlogPlatform.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -33,6 +34,13 @@ namespace BlogPlatform.API.Controller
         {
             var result = await _service.LoginAsync(dto);
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public IActionResult GetUser()
+        {
+            return Ok("You are authenticated");
         }
 
     }
