@@ -1,2 +1,11 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BlogPlatform.API/BlogPlatform.API.csproj" />
+    <Project Path="src/BlogPlatform.Application/BlogPlatform.Application.csproj" />
+    <Project Path="src/BlogPlatform.Domain/BlogPlatform.Domain.csproj" />
+    <Project Path="src/BlogPlatform.Infrastructure/BlogPlatform.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BlogPlatform.Tests/BlogPlatform.Tests.csproj" />
+  </Folder>
 </Solution>
