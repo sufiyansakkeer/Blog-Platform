@@ -10,8 +10,8 @@ namespace BlogPlatform.Application.Interfaces
     {
         Task AddAsync(Blog blog);
         Task<List<Blog>> GetAllAsync();
-        Task<Blog?> GetById(Guid id);
-        Task<bool> UpdateAsync(Blog blog);
-        Task<bool> DeleteAsync(Blog blog);
+        Task<Blog?> GetByIdAsync(Guid id);
+        Task UpdateAsync(Blog blog);
+        Task DeleteAsync(Blog blog);
     }
 }
