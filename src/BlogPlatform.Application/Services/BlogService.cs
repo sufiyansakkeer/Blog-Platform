@@ -23,6 +23,7 @@ namespace BlogPlatform.Application.Services
                 Content = dto.Content,
                 Id = Guid.NewGuid(),
                 Title = dto.Title,
+                UserId = userId
             };
 
             await _repo.AddAsync(blog);
