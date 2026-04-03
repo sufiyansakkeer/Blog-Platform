@@ -31,9 +31,15 @@ namespace BlogPlatform.Infrastructure.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Blog>> GetAllAsync()
+        public async Task<List<Blog>> GetAllAsync(int page, int pageSize, Guid userId)
         {
-            return await _context.Blogs.Include(x => x.User).ToListAsync();
+            page = page < 1 ? 1 : page;
+            return await _context.Blogs
+            .AsNoTracking()
+            .Where(x => x.UserId == userId)
+            .OrderByDescending(x => x.CreatedDate)
+            .Skip((page - 1) * pageSize).Take(pageSize)
+            .ToListAsync();
 
         }
 

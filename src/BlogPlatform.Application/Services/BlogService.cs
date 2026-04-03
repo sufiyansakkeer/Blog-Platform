@@ -51,22 +51,18 @@ namespace BlogPlatform.Application.Services
             return true;
         }
 
-        public async Task<List<BlogDto>> GetAllBlogsAsync()
+        public async Task<List<BlogDto>> GetAllBlogsAsync(int page, int pageSize, Guid userId)
         {
-            var blogs = await _repo.GetAllAsync();
+            var blogs = await _repo.GetAllAsync(page, pageSize, userId);
             var result = new List<BlogDto>();
-
-            foreach (var blog in blogs)
+            return [.. blogs.Select(b => new BlogDto
             {
-                result.Add(new BlogDto
-                {
-                    Id = blog.Id,
-                    Title = blog.Title,
-                    Content = blog.Content,
+                Id = b.Id,
+                Title = b.Title,
+                Content = b.Content,
+                CreatedAt = b.CreatedDate,
+            })];
 
-                });
-            }
-            return result;
         }
 
         public async Task<BlogDto?> GetBlogByIdAsync(Guid id)
@@ -81,6 +77,7 @@ namespace BlogPlatform.Application.Services
                 Id = blog.Id,
                 Title = blog.Title,
                 Content = blog.Content,
+                CreatedAt = blog.CreatedDate,
             };
         }
 

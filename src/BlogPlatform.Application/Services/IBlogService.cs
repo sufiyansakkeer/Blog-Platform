@@ -9,7 +9,7 @@ namespace BlogPlatform.Application.Services
     public interface IBlogService
     {
         Task<BlogDto> CreateBlog(CreateBlogDto dto, Guid userId);
-        Task<List<BlogDto>> GetAllBlogsAsync();
+        Task<List<BlogDto>> GetAllBlogsAsync(int page, int pageSize, Guid userId);
 
         Task<BlogDto?> GetBlogByIdAsync(Guid id);
 

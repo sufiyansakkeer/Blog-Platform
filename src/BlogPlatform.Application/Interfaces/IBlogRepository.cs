@@ -9,7 +9,7 @@ namespace BlogPlatform.Application.Interfaces
     public interface IBlogRepository
     {
         Task AddAsync(Blog blog);
-        Task<List<Blog>> GetAllAsync();
+        Task<List<Blog>> GetAllAsync(int page, int pageSize, Guid userId);
         Task<Blog?> GetByIdAsync(Guid id);
         Task UpdateAsync(Blog blog);
         Task DeleteAsync(Blog blog);

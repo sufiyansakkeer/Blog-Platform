@@ -26,9 +26,10 @@ namespace BlogPlatform.API.Controller
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int page, int pageSize)
         {
-            var blogs = await _blog.GetAllBlogsAsync();
+            var userId = GetUserId();
+            var blogs = await _blog.GetAllBlogsAsync(page, pageSize, userId);
 
 
             return Ok(new ApiResponse<List<BlogDto>>
