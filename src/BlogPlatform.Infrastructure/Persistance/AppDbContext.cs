@@ -12,9 +12,40 @@ namespace BlogPlatform.Infrastructure.Persistance
         public DbSet<User> Users { get; set; }
         public DbSet<Blog> Blogs { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Blog>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValueSql("GETUTCDATE()");
+            // Blog -> comments
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Blog)
+                .WithMany(b => b.Comments)
+                .HasForeignKey(c => c.BlogId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Comment>()
+            .Property(b => b.CreatedDate)
+            .HasDefaultValueSql("GETUTCDATE()");
+
+            // Comment -> parent comment
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.ParentComment)
+                .WithMany(c => c.Replies)
+                .HasForeignKey(c => c.ParentCommentId)
+                .OnDelete(DeleteBehavior.NoAction); // safer
+
+            // Index
+            modelBuilder.Entity<Comment>()
+                .HasIndex(c => new { c.BlogId, c.ParentCommentId });
         }
     }
 }

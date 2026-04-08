@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260403061226_AddCreatedAtToBlog")]
-    partial class AddCreatedAtToBlog
+    [Migration("20260407131716_AddCreatedDateToBlog")]
+    partial class AddCreatedDateToBlog
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,9 @@ namespace BlogPlatform.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -50,6 +52,37 @@ namespace BlogPlatform.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("BlogPlatform.Domain.Entities.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BlogId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ParentCommentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentCommentId");
+
+                    b.HasIndex("BlogId", "ParentCommentId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("BlogPlatform.Domain.Entities.User", b =>
@@ -73,13 +106,39 @@ namespace BlogPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("BlogPlatform.Domain.Entities.Blog", b =>
                 {
-                    b.HasOne("BlogPlatform.Domain.Entities.User", "User")
+                    b.HasOne("BlogPlatform.Domain.Entities.User", null)
                         .WithMany("Blogs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("BlogPlatform.Domain.Entities.Comment", b =>
+                {
+                    b.HasOne("BlogPlatform.Domain.Entities.Blog", "Blog")
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlogPlatform.Domain.Entities.Comment", "ParentComment")
+                        .WithMany("Replies")
+                        .HasForeignKey("ParentCommentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Blog");
+
+                    b.Navigation("ParentComment");
+                });
+
+            modelBuilder.Entity("BlogPlatform.Domain.Entities.Blog", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("BlogPlatform.Domain.Entities.Comment", b =>
+                {
+                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("BlogPlatform.Domain.Entities.User", b =>
