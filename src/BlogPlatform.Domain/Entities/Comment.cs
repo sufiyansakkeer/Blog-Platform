@@ -16,6 +16,8 @@ namespace BlogPlatform.Domain.Entities
         public Guid? ParentCommentId { get; set; }
         public Comment? ParentComment { get; set; }
         public ICollection<Comment> Replies { get; set; } = [];
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
     }
 }

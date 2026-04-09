@@ -8,7 +8,7 @@ namespace BlogPlatform.Application.DTOs.Comment
     public class CommentResponseDto
     {
         public Guid Id { get; set; }
-        public string Content { get; set; }
+        public string Content { get; set; } = null!;
         public Guid BlogId { get; set; }
         public Guid UserId { get; set; }
         public DateTime CreatedAt { get; set; }

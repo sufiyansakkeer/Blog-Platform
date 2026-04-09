@@ -19,22 +19,29 @@ namespace BlogPlatform.Infrastructure.Repository
         }
         public async Task AddAsync(Comment comment)
         {
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
+            await _context.Comments.AddAsync(comment);
         }
 
-        public async Task DeleteAsync(Comment comment)
+        public void Delete(Comment comment)
         {
 
             _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
 
+        }
+        public void Update(Comment comment)
+        {
+            _context.Comments.Update(comment);
         }
 
         public async Task<List<Comment>> GetByBlogIdAsync(Guid blogId, int page, int pageSize)
         {
             page = page < 1 ? 1 : page;
-            return await _context.Comments.Where(c => c.BlogId == blogId).OrderByDescending(c => c.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            pageSize = pageSize < 1 ? 1 : pageSize;
+            return await _context.Comments
+            .Where(c => c.BlogId == blogId)
+            .OrderByDescending(c => c.CreatedDate)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize).ToListAsync();
         }
 
         public async Task<Comment?> GetByIdAsync(Guid id)
@@ -43,6 +50,8 @@ namespace BlogPlatform.Infrastructure.Repository
         }
         public async Task<List<Comment>> GetTopLevelComments(Guid blogId, int page, int pageSize)
         {
+            page = page < 1 ? 1 : page;
+            pageSize = pageSize < 1 ? 1 : pageSize;
             return await _context.Comments
                 .Where(c => c.BlogId == blogId && c.ParentCommentId == null)
                 .OrderByDescending(c => c.CreatedDate)
@@ -54,7 +63,7 @@ namespace BlogPlatform.Infrastructure.Repository
         {
             return await _context.Comments
                 .Where(c => c.ParentCommentId != null && parentIds.Contains(c.ParentCommentId.Value))
-                .OrderBy(c => c.CreatedDate)
+                .OrderByDescending(c => c.CreatedDate)
                 .ToListAsync();
         }
     }

@@ -36,6 +36,9 @@ namespace BlogPlatform.Infrastructure.Persistance
             .Property(b => b.CreatedDate)
             .HasDefaultValueSql("GETUTCDATE()");
 
+            modelBuilder.Entity<Comment>()
+            .HasQueryFilter(c => !c.IsDeleted);
+
             // Comment -> parent comment
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.ParentComment)

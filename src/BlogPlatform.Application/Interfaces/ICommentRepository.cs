@@ -10,8 +10,10 @@ namespace BlogPlatform.Application.Interfaces
     {
         Task<Comment?> GetByIdAsync(Guid id);
         Task AddAsync(Comment comment);
+
         Task<List<Comment>> GetByBlogIdAsync(Guid blogId, int page, int pageSize);
-        Task DeleteAsync(Comment comment);
+        void Delete(Comment comment);
+        void Update(Comment comment);
         Task<List<Comment>> GetTopLevelComments(Guid blogId, int page, int pageSize);
         Task<List<Comment>> GetRepliesByParentIds(List<Guid> parentIds);
 
