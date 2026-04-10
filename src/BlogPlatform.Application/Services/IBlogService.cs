@@ -16,6 +16,7 @@ namespace BlogPlatform.Application.Services
         Task<bool> UpdateBlogAsync(Guid id, UpdateBlogDto dto, Guid userId);
 
         Task<bool> DeleteBlogAsync(Guid id, Guid userId);
+        Task<BlogDto> CreateBlogWithCommentAsync(CreateBlogWithCommentDto dto, Guid userId);
 
     }
 }

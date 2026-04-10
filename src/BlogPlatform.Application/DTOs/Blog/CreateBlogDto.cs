@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogPlatform.Application.DTOs.Comment;
 
 namespace BlogPlatform.Application.DTOs.Blog
 {
@@ -10,8 +11,8 @@ namespace BlogPlatform.Application.DTOs.Blog
     {
         [Required]
         [MaxLength(150)]
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
         [Required]
-        public string Content { get; set; }
+        public string Content { get; set; } = null!;
     }
 }
