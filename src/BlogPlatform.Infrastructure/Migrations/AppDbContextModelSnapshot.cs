@@ -48,7 +48,7 @@ namespace BlogPlatform.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
                 });
 
             modelBuilder.Entity("BlogPlatform.Domain.Entities.Comment", b =>
@@ -87,7 +87,7 @@ namespace BlogPlatform.Infrastructure.Migrations
 
                     b.HasIndex("BlogId", "ParentCommentId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("BlogPlatform.Domain.Entities.User", b =>
@@ -106,7 +106,7 @@ namespace BlogPlatform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BlogPlatform.Domain.Entities.Blog", b =>

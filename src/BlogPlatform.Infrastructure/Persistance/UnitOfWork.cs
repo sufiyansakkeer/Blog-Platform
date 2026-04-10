@@ -16,12 +16,11 @@ namespace BlogPlatform.Infrastructure.Persistance
 
         public IBlogRepository Blog { get; }
 
-        public UnitOfWork(ICommentRepository commentRepository, IBlogRepository blogRepository, AppDbContext context, IDbContextTransaction transaction)
+        public UnitOfWork(ICommentRepository commentRepository, IBlogRepository blogRepository, AppDbContext context)
         {
             Comment = commentRepository;
             Blog = blogRepository;
             _context = context;
-            _transaction = transaction;
         }
 
         public async Task<int> SaveChangesAsync()
@@ -37,12 +36,16 @@ namespace BlogPlatform.Infrastructure.Persistance
         public async Task CommitTransactionAsync()
         {
             await _context.SaveChangesAsync();
-            await _transaction!.CommitAsync();
+            if (_transaction != null)
+            {
+                await _transaction!.CommitAsync();
+            }
         }
 
         public async Task RollbackTransactionAsync()
         {
-            await _transaction!.RollbackAsync();
+            if (_transaction != null)
+                await _transaction!.RollbackAsync();
         }
     }
 }
