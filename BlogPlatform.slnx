@@ -6,6 +6,7 @@
     <Project Path="src/BlogPlatform.Infrastructure/BlogPlatform.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/BlogPlatform.IntegrationTests/BlogPlatform.IntegrationTests.csproj" />
     <Project Path="tests/BlogPlatform.Tests/BlogPlatform.Tests.csproj" />
   </Folder>
 </Solution>
