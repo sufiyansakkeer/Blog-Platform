@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     # jwt
     ALGORITHM: str
     SECRET_KEY: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
     # app
     debug: bool = False
     app_name: str = "Blog platform"

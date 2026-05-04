@@ -3,8 +3,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 from app.models.base import SoftDeleteMixin, TimeStampMixin
-from app.models.user import User
-from app.models.comment import Comment
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.models import User, Comment
 
 
 class Post(Base, TimeStampMixin, SoftDeleteMixin):
