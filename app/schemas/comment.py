@@ -10,7 +10,7 @@ class CommentCreate(BaseModel):
 class CommentUpdate(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    content: str | None = None
+    content: str
 
 
 class CommentRead(BaseModel):
