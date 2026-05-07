@@ -66,7 +66,7 @@ async def get_all_post_comments(
 
 
 @router.patch(
-    "/comments/{comments_id}",
+    "/comments/{comment_id}",
     response_model=CommentRead,
     status_code=status.HTTP_200_OK,
 )

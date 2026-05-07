@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 
@@ -21,5 +22,5 @@ class CommentRead(BaseModel):
     post_id: int
     created_by: int
     updated_by: int | None
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
